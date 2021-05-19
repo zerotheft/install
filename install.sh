@@ -323,15 +323,12 @@ fi
 ohai "Downloading and installing Zerotheft-Holon."
 (
   cd "${HOLON_UI_REPOSITORY}" >/dev/null || return
-  ohai "Tapping holon-ui"
-  # setup github repo 
-  git_repo_setup "${HOLON_UI_GIT_REMOTE}" "origin/master"
-
-  execute "yarn" "install"
-  
-  execute "cp" "src/config.${ENV}.json.example" "src/config.${ENV}.json"
-
-  execute "yarn" "build-${ENV}"
+    ohai "Tapping holon-ui"
+      # setup github repo 
+      git_repo_setup "${HOLON_UI_GIT_REMOTE}" "origin/master"
+      execute "yarn" "install"  
+      execute "cp" "src/config.${ENV}.json.example" "src/config.${ENV}.json"
+      execute "yarn" "build-${ENV}"
 
   #move build to different directory but first clear the existing one
   if ! [[ -d "${HOLON_PREFIX}/build" ]]; then
@@ -345,38 +342,19 @@ ohai "Downloading and installing Zerotheft-Holon."
 
 (
   cd "${HOLON_API_REPOSITORY}" >/dev/null || return
-    ohai "Tapping holon-api"
-  
+    ohai "Tapping holon-api"  
       git_repo_setup "${HOLON_API_GIT_REMOTE}" "origin/master"
 
   # look if submodules is installed or not; otherwise install
   cd "${HOLON_API_UTILS_REPOSITORY}" >/dev/null || return
-
-  # if ! [[ -d "${HOLON_API_UTILS_REPOSITORY}" ]]; then
-  # if [ -z "$(ls -A "${HOLON_API_UTILS_REPOSITORY}")" ]; then
     ohai "Tapping holon-api/sub-modules/zerotheft-node-utils"
-    # execute "git" "submodule" "add" "${HOLON_UTILS_GIT_REMOTE}" "sub-modules/zerotheft-node-utils"
-    # execute "yarn" "init-utils"
-      git_repo_setup "${HOLON_UTILS_GIT_REMOTE}" "origin/master"
-
-      execute "yarn" "install"  
-      # else   
-    # ohai "Updating holon-api/sub-modules/zerotheft-node-utils"
-    # (
-    #   cd "${HOLON_API_UTILS_REPOSITORY}" >/dev/null || return
     
-    #   execute "git" "fetch" "--force" "origin"
-    #   execute "git" "fetch" "--force" "--tags" "origin"
-
-    #   execute "git" "reset" "--hard" "origin/master" 
-
-    #   execute "yarn" "install"
-
-    # ) || exit 1
-  # fi
+      git_repo_setup "${HOLON_UTILS_GIT_REMOTE}" "origin/master"
+      execute "yarn" "install"  
+     
   cd "${HOLON_API_REPOSITORY}" >/dev/null || return
-    execute "cp" "config.${ENV}.json.example" "config.${ENV}.json"
 
+    execute "cp" "config.${ENV}.json.example" "config.${ENV}.json"
     execute "yarn" "install"
 
     # activate zt-holon command
@@ -443,7 +421,7 @@ ohai "Starting Zerotheft-Holon"
 
 # Add cron job that checks if new release is made in github and do auto update
 # Auto update is only possible if AUTO_UPDATE key is true in config
-# Cron will run every 5 minutes
+# Cron will run every 4 HOURS
 ohai 'Add updater cron if not present'
   (crontab -l | grep "${UPDATE_SCRIPT} >> ${CRON_LOG} 2>&1" || echo "0 */4 * * *  ${UPDATE_SCRIPT}  >> ${CRON_LOG} 2>&1") | crontab -
 

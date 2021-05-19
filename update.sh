@@ -48,8 +48,9 @@ ENV=$(remove_quotes "$(jq .MODE ${ENV_FILE})")
 
 # fetch thel latest tag name of a repo
 get_required_version(){
-  # echo $(curl --silent "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
-  echo 1.0.1
+  cmd="$(curl --silent "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')"
+  echo "${cmd}"
+  # echo 1.0.1
 }
 
 # returns the current version of app
