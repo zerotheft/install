@@ -445,5 +445,5 @@ ohai "Starting Zerotheft-Holon"
 # Auto update is only possible if AUTO_UPDATE key is true in config
 # Cron will run every 5 minutes
 ohai 'Add updater cron if not present'
-  (crontab -l | grep "${UPDATE_SCRIPT} >> ${CRON_LOG} 2>&1" || echo "* * * * *  ${UPDATE_SCRIPT}  >> ${CRON_LOG} 2>&1") | crontab -
+  (crontab -l | grep "${UPDATE_SCRIPT} >> ${CRON_LOG} 2>&1" || echo "0 */4 * * *  ${UPDATE_SCRIPT}  >> ${CRON_LOG} 2>&1") | crontab -
 
