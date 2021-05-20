@@ -199,7 +199,6 @@ ohai "Running script of ${ENV} environment"
 echo
 
 ohai "This script will install:"
-# echo "${HOLON_REPOSITORY}"
   echo " - ${HOLON_API_GIT_NAME}: ${HOLON_API_VERSION}"
   echo " - ${HOLON_UI_GIT_NAME}: ${HOLON_UI_VERSION}"
   echo " - ${HOLON_API_UTILS_GIT_NAME}: ${HOLON_UTILS_VERSION}"
@@ -210,8 +209,6 @@ if [[ "${#mkdirs[@]}" -gt 0 ]]; then
 fi
 
 wait_for_user
-# if [[ -z "${NONINTERACTIVE-}" ]]; then
-# fi
 
 if ! [[ -d "${HOLON_PREFIX}" ]]; then
   execute "/bin/mkdir" "-p" "${HOLON_PREFIX}"  
@@ -423,5 +420,5 @@ ohai "Starting Zerotheft-Holon"
 # Auto update is only possible if AUTO_UPDATE key is true in config
 # Cron will run every 4 HOURS
 ohai 'Add updater cron if not present'
-  (crontab -l | grep "${UPDATE_SCRIPT} >> ${CRON_LOG} 2>&1" || echo "0 */4 * * *  ${UPDATE_SCRIPT}  >> ${CRON_LOG} 2>&1") | crontab -
+  (crontab -l | grep "${UPDATE_SCRIPT} >> ${CRON_LOG} 2>&1" || echo "0 */3 * * *  ${UPDATE_SCRIPT}  >> ${CRON_LOG} 2>&1") | crontab -
 
