@@ -298,6 +298,22 @@ if ! command -v redis-server >/dev/null; then
   fi
 fi
 
+# install if pygments is not installed
+if ! command -v  pygmentize >/dev/null; then
+  ohai "Installing python3-pygments:"
+  if [[ $(command -v apt-get) ]]; then
+    execute_sudo "apt" "install" "-y" "python3-pygments"
+  elif [[ $(command -v yum) ]]; then
+    execute_sudo "yum" "install" "python3-pygments" "-y"
+  elif [[ $(command -v pacman) ]]; then
+    execute_sudo "pacman" "-S" "-y" "python3-pygments"
+    elif [[ $(command -v dnf) ]]; then
+    execute_sudo "dnf" "install" "-y" "python3-pygments"
+  elif [[ $(command -v apk) ]]; then
+    execute_sudo "apk" "add" "--update" "python3-pygments"
+  fi
+fi
+
 # install if yarn is not installed
 if ! command -v yarn >/dev/null; then
   ohai "Installing yarn:"  
@@ -307,14 +323,12 @@ fi
 # install latex dependency
 if ! command -v latex >/dev/null; then
   ohai "Installing texlive"
-    execute_sudo "sudo" "apt" "install" "texlive-latex-extra" "-y"
+    execute_sudo "apt" "install" "texlive-latex-extra" "-y"
   ohai "Installing pgf-pie"
     wget "https://mirrors.ctan.org/graphics/pgf/contrib/pgf-pie.zip"
     execute_sudo "unzip" "-d" "/usr/share/texlive/texmf-dist/tex/latex" "pgf-pie.zip"
     execute_sudo "mktexlsr"
     execute_sudo "rm" "pgf-pie.zip"
-  ohai "Installing python pygments for latex minted package"
-    execute_sudo "sudo" "apt" "install" "python3-pygments"
 fi
 
 # start installation
