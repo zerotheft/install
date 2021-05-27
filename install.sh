@@ -313,6 +313,8 @@ if ! command -v latex >/dev/null; then
     execute_sudo "unzip" "-d" "/usr/share/texlive/texmf-dist/tex/latex" "pgf-pie.zip"
     execute_sudo "mktexlsr"
     execute_sudo "rm" "pgf-pie.zip"
+  ohai "Installing python pygments for latex minted package"
+    execute_sudo "sudo" "apt" "install" "python3-pygments"
 fi
 
 # start installation
