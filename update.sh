@@ -20,6 +20,7 @@ HOLON_REPOSITORY="${HOLON_PREFIX}/Zerotheft-Holon"
 HOLON_API_REPOSITORY="${HOLON_REPOSITORY}/holon-api"
 HOLON_API_UTILS_REPOSITORY="${HOLON_REPOSITORY}/holon-api/sub-modules/zerotheft-node-utils"
 HOLON_UI_REPOSITORY="${HOLON_REPOSITORY}/holon-ui"
+BRANCH="master"
 
 CONFIG="${HOLON_PREFIX}/config.json"
 ENV_FILE="${HOLON_PREFIX}/.zt/env.json" 
@@ -129,7 +130,7 @@ version_compare "$required_ui_ver" "$current_ui_ver" &&
     echo "- Required version: ${required_ui_ver}"
     cd "${HOLON_UI_REPOSITORY}" >/dev/null || return
 
-      git_repo_update  "origin/master"
+      git_repo_update  "origin/${BRANCH}"
 
       execute "yarn" "install"      
 
@@ -156,7 +157,7 @@ version_compare "$required_api_ver" "$current_api_ver" &&
 
     cd "${HOLON_API_REPOSITORY}" >/dev/null || return  
         
-      git_repo_update "origin/master"
+      git_repo_update "origin/${BRANCH}"
 
       execute "yarn" "install"
 
@@ -174,7 +175,7 @@ ohai "Checking holon-api/sub-modules/zerotheft-node-utils"
 
       cd "${HOLON_API_UTILS_REPOSITORY}" >/dev/null || return
     
-        git_repo_update "origin/master"
+        git_repo_update "origin/${BRANCH}"
 
       execute "yarn" "install"
 

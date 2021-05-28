@@ -32,13 +32,11 @@ HOLON_API_UTILS_GIT_NAME="zerotheft/zerotheft-node-utils"
 HOLON_API_GIT_REMOTE="https://github.com/${HOLON_API_GIT_NAME}" 
 HOLON_UI_GIT_REMOTE="https://github.com/${HOLON_UI_GIT_NAME}"
 HOLON_UTILS_GIT_REMOTE="https://github.com/${HOLON_API_UTILS_GIT_NAME}"
-# HOLON_API_GIT_REMOTE="racetrack:${HOLON_API_GIT_NAME}.git"
-# HOLON_UI_GIT_REMOTE="racetrack:${HOLON_UI_GIT_NAME}.git"
-# HOLON_UTILS_GIT_REMOTE="racetrack:${HOLON_API_UTILS_GIT_NAME}.git"
 HOLON_REPOSITORY="${HOLON_PREFIX}/Zerotheft-Holon"
 HOLON_API_REPOSITORY="${HOLON_REPOSITORY}/holon-api"
 HOLON_API_UTILS_REPOSITORY="${HOLON_REPOSITORY}/holon-api/sub-modules/zerotheft-node-utils"
 HOLON_UI_REPOSITORY="${HOLON_REPOSITORY}/holon-ui"
+BRANCH="master"
 
 CHOWN="/bin/chown"
 GROUP="$(id -gn)"
@@ -48,7 +46,7 @@ ENV_FILE="${HOLON_PREFIX}/.zt/env.json"
 INTEGRITY_PROFILE="${HOLON_PREFIX}/integrity_profile.json"
 INTEGRITY_PROFILE_YAML="${HOLON_PREFIX}/integrity_profile.yaml"
 CRON_LOG="${HOLON_PREFIX}/update.log"
-UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/master/update.sh)"'
+UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/${BRANCH}/update.sh)"'
 
 # AUTO_UPDATE=true
 # DEPENDENCIES_REINSTALL=true
@@ -339,7 +337,7 @@ ohai "Downloading and installing Zerotheft-Holon."
   cd "${HOLON_UI_REPOSITORY}" >/dev/null || return
     ohai "Tapping holon-ui"
       # setup github repo 
-      git_repo_setup "${HOLON_UI_GIT_REMOTE}" "origin/master"
+      git_repo_setup "${HOLON_UI_GIT_REMOTE}" "origin/${BRANCH}"
       execute "yarn" "install"  
       execute "cp" "src/config.${ENV}.json.example" "src/config.${ENV}.json"
       execute "yarn" "build-${ENV}"
@@ -357,13 +355,13 @@ ohai "Downloading and installing Zerotheft-Holon."
 (
   cd "${HOLON_API_REPOSITORY}" >/dev/null || return
     ohai "Tapping holon-api"  
-      git_repo_setup "${HOLON_API_GIT_REMOTE}" "origin/master"
+      git_repo_setup "${HOLON_API_GIT_REMOTE}" "origin/${BRANCH}"
 
   # look if submodules is installed or not; otherwise install
   cd "${HOLON_API_UTILS_REPOSITORY}" >/dev/null || return
     ohai "Tapping holon-api/sub-modules/zerotheft-node-utils"
     
-      git_repo_setup "${HOLON_UTILS_GIT_REMOTE}" "origin/master"
+      git_repo_setup "${HOLON_UTILS_GIT_REMOTE}" "origin/${BRANCH}"
       execute "yarn" "install"  
      
   cd "${HOLON_API_REPOSITORY}" >/dev/null || return
