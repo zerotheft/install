@@ -20,7 +20,7 @@ HOLON_REPOSITORY="${HOLON_PREFIX}/Zerotheft-Holon"
 HOLON_API_REPOSITORY="${HOLON_REPOSITORY}/holon-api"
 HOLON_API_UTILS_REPOSITORY="${HOLON_REPOSITORY}/holon-api/sub-modules/zerotheft-node-utils"
 HOLON_UI_REPOSITORY="${HOLON_REPOSITORY}/holon-ui"
-BRANCH="private-blockchainv2.0"
+BRANCH="master"
 
 CONFIG="${HOLON_PREFIX}/config.json"
 ENV_FILE="${HOLON_PREFIX}/.zt/env.json" 
