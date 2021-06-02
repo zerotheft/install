@@ -299,17 +299,17 @@ fi
 
 # install if pygments is not installed
 if ! command -v  pygmentize >/dev/null; then
-  ohai "Installing python3-pygments:"
+  ohai "Installing python-pygments:"
   if [[ $(command -v apt-get) ]]; then
-    execute_sudo "apt" "install" "-y" "python3-pygments"
+    execute_sudo "apt" "install" "-y" "python-pygments"
   elif [[ $(command -v yum) ]]; then
-    execute_sudo "yum" "install" "python3-pygments" "-y"
+    execute_sudo "yum" "install" "python-pygments" "-y"
   elif [[ $(command -v pacman) ]]; then
-    execute_sudo "pacman" "-S" "-y" "python3-pygments"
+    execute_sudo "pacman" "-S" "-y" "python-pygments"
     elif [[ $(command -v dnf) ]]; then
-    execute_sudo "dnf" "install" "-y" "python3-pygments"
+    execute_sudo "dnf" "install" "-y" "python-pygments"
   elif [[ $(command -v apk) ]]; then
-    execute_sudo "apk" "add" "--update" "python3-pygments"
+    execute_sudo "apk" "add" "--update" "python-pygments"
   fi
 fi
 
