@@ -46,7 +46,7 @@ ENV_FILE="${HOLON_PREFIX}/.zt/env.json"
 INTEGRITY_PROFILE="${HOLON_PREFIX}/integrity_profile.json"
 INTEGRITY_PROFILE_YAML="${HOLON_PREFIX}/integrity_profile.yaml"
 CRON_LOG="${HOLON_PREFIX}/update.log"
-UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/${BRANCH}/update.sh)"'
+UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/master/update.sh)"'
 
 # AUTO_UPDATE=true
 # DEPENDENCIES_REINSTALL=true
