@@ -36,7 +36,7 @@ HOLON_REPOSITORY="${HOLON_PREFIX}/Zerotheft-Holon"
 HOLON_API_REPOSITORY="${HOLON_REPOSITORY}/holon-api"
 HOLON_API_UTILS_REPOSITORY="${HOLON_REPOSITORY}/holon-api/sub-modules/zerotheft-node-utils"
 HOLON_UI_REPOSITORY="${HOLON_REPOSITORY}/holon-ui"
-BRANCH="master"
+BRANCH="yaml_all_years"
 
 CHOWN="/bin/chown"
 GROUP="$(id -gn)"
@@ -46,7 +46,7 @@ ENV_FILE="${HOLON_PREFIX}/.zt/env.json"
 INTEGRITY_PROFILE="${HOLON_PREFIX}/integrity_profile.json"
 INTEGRITY_PROFILE_YAML="${HOLON_PREFIX}/integrity_profile.yaml"
 CRON_LOG="${HOLON_PREFIX}/update.log"
-UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/master/update.sh)"'
+UPDATE_SCRIPT='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/zerotheft/install/yaml_all_years/update.sh)"'
 
 # AUTO_UPDATE=true
 # DEPENDENCIES_REINSTALL=true
