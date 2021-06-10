@@ -182,7 +182,7 @@ ohai "Checking holon-api/sub-modules/zerotheft-node-utils required:${required_ut
     ) || exit 1
   ) || echo 'holon-utils is up to date'
 # save the latest version in config
-ohai "Track Zerotheft-Holon version"
+ohai "Track Zerotheft-Holon version api:${required_api_ver} ui:${required_ui_ver} utils:${required_utils_ver}"
   tmp=$(mktemp)
   jq -M ". + {\"HOLON_API_VERSION\":\"${required_api_ver}\", \"HOLON_UI_VERSION\":\"${required_ui_ver}\",\"HOLON_UTILS_VERSION\":\"${required_utils_ver}\",\"VERSION_TIMESTAMP\":${TIMESTAMP}}" "${CONFIG}" > "$tmp" && mv "$tmp" "$CONFIG"
 
