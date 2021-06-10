@@ -36,7 +36,7 @@ remove_quotes(){
 if ! [[ -f "${CONFIG}" ]]; then
   abort "Configs missing"
 fi
-AUTO_UPDATE=$(remove_quotes "$(jq .AUTO_UPDATE ${CONFIG})")
+AUTO_UPDATE=$(remove_quotes "$(jq .AUTO_UPDATE "${CONFIG}")")
 if [[ "$AUTO_UPDATE" = "false" ]]; then
   abort "Auto update is disabled."
 fi
@@ -45,7 +45,7 @@ fi
 if ! [[ -f "${ENV_FILE}" ]]; then
   abort "Environment missing"
 fi
-ENV=$(remove_quotes "$(jq .MODE ${ENV_FILE})")
+ENV=$(remove_quotes "$(jq .MODE "${ENV_FILE}")")
 
 # fetch thel latest tag name of a repo
 get_required_version(){
@@ -56,7 +56,7 @@ get_required_version(){
 
 # returns the current version of app
 get_current_version(){
-  ver=$(jq .HOLON_"$1"_VERSION ${CONFIG})
+  ver=$(jq .HOLON_"$1"_VERSION "${CONFIG}")
   remove_quotes "$ver"
 }
 
@@ -121,7 +121,7 @@ current_utils_ver=$(get_current_version "UTILS")
 # current_api_ver="1.0.0"
 
 # checking version of holon-ui and update if needed
-ohai  "Checking holon-ui"
+ohai  "Checking holon-ui required:${required_ui_ver} current:${current_ui_ver}"
 version_compare "$required_ui_ver" "$current_ui_ver" &&
 (
   (
@@ -147,7 +147,7 @@ version_compare "$required_ui_ver" "$current_ui_ver" &&
 ) || echo 'holon-ui is up to date'
 
 # checking version of holon-api and update if needed
-ohai  "Checking holon-api"
+ohai  "Checking holon-api required:${required_api_ver} current:${current_api_ver}"
 version_compare "$required_api_ver" "$current_api_ver" &&
 (
   (
@@ -165,7 +165,7 @@ version_compare "$required_api_ver" "$current_api_ver" &&
 
 ) ||  echo 'holon-api is up to date'
 
-ohai "Checking holon-api/sub-modules/zerotheft-node-utils"
+ohai "Checking holon-api/sub-modules/zerotheft-node-utils required:${required_utils_ver} current:${current_utils_ver}"
   version_compare "$required_utils_ver" "$current_utils_ver" &&
   (
     (
@@ -184,7 +184,7 @@ ohai "Checking holon-api/sub-modules/zerotheft-node-utils"
 # save the latest version in config
 ohai "Track Zerotheft-Holon version"
   tmp=$(mktemp)
-  jq -M ". + {\"HOLON_API_VERSION\":\"${required_api_ver}\", \"HOLON_UI_VERSION\":\"${required_ui_ver}\",\"HOLON_UTILS_VERSION\":\"${required_utils_ver}\",\"VERSION_TIMESTAMP\":${TIMESTAMP}}" ${CONFIG} > "$tmp" && mv "$tmp" $CONFIG
+  jq -M ". + {\"HOLON_API_VERSION\":\"${required_api_ver}\", \"HOLON_UI_VERSION\":\"${required_ui_ver}\",\"HOLON_UTILS_VERSION\":\"${required_utils_ver}\",\"VERSION_TIMESTAMP\":${TIMESTAMP}}" "${CONFIG}" > "$tmp" && mv "$tmp" "$CONFIG"
 
 ohai "Update Complete"
 echo
