@@ -323,11 +323,6 @@ fi
 if ! command -v latex >/dev/null; then
   ohai "Installing texlive"
     execute_sudo "apt" "install" "texlive-latex-extra" "-y"
-  ohai "Installing pgf-pie"
-    wget "https://mirrors.ctan.org/graphics/pgf/contrib/pgf-pie.zip"
-    execute_sudo "unzip" "-d" "/usr/share/texlive/texmf-dist/tex/latex" "pgf-pie.zip"
-    execute_sudo "mktexlsr"
-    execute_sudo "rm" "pgf-pie.zip"
 fi
 
 # start installation
