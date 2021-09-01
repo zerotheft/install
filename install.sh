@@ -420,9 +420,7 @@ sed -i "s/40107/$port/" "${HOLON_API_REPOSITORY}/config.${ENV}.json"
 ohai "Installation successful!"
 echo
 
-#Cross check if most required package got installed or not. "pygmentzie" & "latex"
-if ! command -v  pygmentize >/dev/null; then
-fi
+
 # After successful install holon will run in user given holon_url and port
 ohai "Starting Zerotheft-Holon"
 (
