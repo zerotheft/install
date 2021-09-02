@@ -185,7 +185,7 @@ ohai "Checking releases for installation"
     abort "Releases missing. Couldnot install Zerotheft-Holon"
   fi
   echo "OK"
-directories=(.zt tmp zt_report/input_jsons zt_report/reports/ztReport zt_report/reports/multiIssueReport .cache public/exports Zerotheft-Holon/holon-api Zerotheft-Holon/holon-ui)
+directories=(.zt tmp zt_report/input_jsons .cache public/exports Zerotheft-Holon/holon-api Zerotheft-Holon/holon-ui)
 
 mkdirs=()
 for dir in "${directories[@]}"; do
