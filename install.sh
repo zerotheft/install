@@ -379,20 +379,20 @@ if ! [[ -f "${CONFIG}" ]]; then
   read -p "- ${tty_bold}Enter Your Holon URL${tty_reset}(eg: ${tty_underline}http://<holon_url>${tty_reset}): " holon_address
   read -p "- ${tty_bold}Enter PORT${tty_reset}: " port
 
-  valid_yaml=false
-  while [ "$valid_yaml" != true ]
-  do
-    read -p "- ${tty_bold}Enter a valid url for integrity profile${tty_reset}: " integrity_profile
-    content=$(curl -L "$integrity_profile")
-    json_validator=$(curl -X POST  --data "data=$(cat "$content")" https://www.lint-trilogy.com/lint/yaml/json)
-    valid_yaml=$(echo "$json_validator" | jq -r '.valid')
-    echo "$valid_yaml"
-    if [ "$valid_yaml" != true ]; then
-      warn "Please have a valid yaml in the given link"
-    fi
-    echo "$content" >> "$INTEGRITY_PROFILE_YAML"
-  done
-  echo "{ \"PROFILE_URL\": \"$integrity_profile\" }" >> "$INTEGRITY_PROFILE"
+  # valid_yaml=false
+  # while [ "$valid_yaml" != true ]
+  # do
+  #   read -p "- ${tty_bold}Enter a valid url for integrity profile${tty_reset}: " integrity_profile
+  #   content=$(curl -L "$integrity_profile")
+  #   json_validator=$(curl -X POST  --data "data=$(cat "$content")" https://www.lint-trilogy.com/lint/yaml/json)
+  #   valid_yaml=$(echo "$json_validator" | jq -r '.valid')
+  #   echo "$valid_yaml"
+  #   if [ "$valid_yaml" != true ]; then
+  #     warn "Please have a valid yaml in the given link"
+  #   fi
+  #   echo "$content" >> "$INTEGRITY_PROFILE_YAML"
+  # done
+  # echo "{ \"PROFILE_URL\": \"$integrity_profile\" }" >> "$INTEGRITY_PROFILE"
 
   # Check the holon address is empty or not
   if [ "$holon_address" != "" ]; then
