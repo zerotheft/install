@@ -418,8 +418,7 @@ if ! [[ -f "${CONFIG}" ]]; then
   echo "$output"
 
   echo "${tty_bold}You can read more about our terms of service and privacy policy from here:${tty_reset} (${tty_underline}$HOLON_PRIVACY_POLICY${tty_reset})"
-  read -p "- ${tty_bold}Do you accept our terms of services and privacy policy${tty_reset}(y/n):" agreement_accept
-
+  
   while true; do
     read -p "- ${tty_bold}Do you accept our terms of services and privacy policy?${tty_reset}(y/n):" agreement_accept
     case $agreement_accept in
