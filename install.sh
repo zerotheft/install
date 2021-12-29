@@ -36,6 +36,7 @@ HOLON_REPOSITORY="${HOLON_PREFIX}/Zerotheft-Holon"
 HOLON_API_REPOSITORY="${HOLON_REPOSITORY}/holon-api"
 HOLON_API_UTILS_REPOSITORY="${HOLON_REPOSITORY}/holon-api/sub-modules/zerotheft-node-utils"
 HOLON_UI_REPOSITORY="${HOLON_REPOSITORY}/holon-ui"
+HOLON_PRIVACY_POLICY="https://zerotheft.net/privacy/"
 BRANCH="master"
 
 CHOWN="/bin/chown"
@@ -313,6 +314,20 @@ if ! command -v  pygmentize >/dev/null; then
   fi
 fi
 
+# install if html2text is not installed
+if ! command -v html2text >/dev/null; then
+  ohai "- Installing html2text:"
+  if [[ $(command -v apt-get) ]]; then
+    execute_sudo "apt" "install" "-y" "html2text"
+  elif [[ $(command -v yum) ]]; then
+    execute_sudo "yum" "install" "-y" "html2text"
+  elif [[ $(command -v pacman) ]]; then
+    execute_sudo "pacman" "-S" "-y" "html2text"
+  elif [[ $(command -v apk) ]]; then
+    execute_sudo "apk" "add" "-y" "html2text"
+  fi
+fi
+
 # install if yarn is not installed
 if ! command -v yarn >/dev/null; then
   ohai "Installing yarn:"  
@@ -373,6 +388,9 @@ ohai "Downloading and installing Zerotheft-Holon."
 
 # Prompt for user inputs if config doesn't exist
 # It will asks holon_url, port
+# Show terms and conditions and privacy policy to user
+# User will either accept or decline the agreement
+# Store the data flag to json file
 if ! [[ -f "${CONFIG}" ]]; then
   ohai "Provide information to start HOLON"
 
@@ -394,6 +412,26 @@ if ! [[ -f "${CONFIG}" ]]; then
   # done
   # echo "{ \"PROFILE_URL\": \"$integrity_profile\" }" >> "$INTEGRITY_PROFILE"
 
+  echo "${tty_bold}Please read the terms of service and privacy policy below:${tty_reset}"
+  privacy_policy="$(curl $HOLON_PRIVACY_POLICY)"
+  output="$(html2text <<< "$privacy_policy")"
+  echo "$output"
+
+  echo "${tty_bold}You can read more about our terms of service and privacy policy from here:${tty_reset} (${tty_underline}$HOLON_PRIVACY_POLICY${tty_reset})"
+  
+  while true; do
+    read -p "- ${tty_bold}Do you accept our terms of services and privacy policy?${tty_reset}(y/n):" agreement_accept
+    case $agreement_accept in
+      [Yy]* )
+        agreement_accept_status=true
+        break;;
+      [Nn]* )
+        agreement_accept_status=false
+        break;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+
   # Check the holon address is empty or not
   if [ "$holon_address" != "" ]; then
     #remove trailing slash from url
@@ -401,7 +439,7 @@ if ! [[ -f "${CONFIG}" ]]; then
     
     ohai "Track Zerotheft-Holon version"
       # keep information recorded in config.json
-      echo "{ \"BASE_URL\": \"$holon_address\",\"APP_URL\": \"$holon_address\", \"PORT\":$port, \"AUTO_UPDATE\":\"true\",\"VERSION_TIMESTAMP\":$TIMESTAMP,\"HOLON_API_VERSION\":\"$HOLON_API_VERSION\",\"HOLON_UI_VERSION\":\"$HOLON_UI_VERSION\",\"HOLON_UTILS_VERSION\":\"$HOLON_UTILS_VERSION\" }" >> "$CONFIG"
+      echo "{ \"BASE_URL\": \"$holon_address\",\"APP_URL\": \"$holon_address\", \"PORT\":$port, \"AUTO_UPDATE\":\"true\",\"VERSION_TIMESTAMP\":$TIMESTAMP,\"HOLON_API_VERSION\":\"$HOLON_API_VERSION\",\"HOLON_UI_VERSION\":\"$HOLON_UI_VERSION\",\"HOLON_UTILS_VERSION\":\"$HOLON_UTILS_VERSION\",\"HOLON_TOS_PP_ACCEPT\":\"$agreement_accept_status\" }" >> "$CONFIG"
   fi
 
   # write environment value in env.json
